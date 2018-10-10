@@ -3,8 +3,10 @@
 // hint: in order to avoid value flickering, set the div to an empty div in the index html
 
 // define global variables
-var currentScore = 0
-var targetScore = 0
+let currentScore = 0
+let targetScore = 0
+let winsCount = 0
+let lossCount = 0
 
 // create crystals object
 var crystals = {
@@ -51,34 +53,53 @@ const startGame = () => {
 const addValues = (crystal) => {
 	// update currentScore
 	currentScore += crystal.value
-    
+	$("#currentScore").html(currentScore)
+	// after we run, check wins by calling the func
+	checkWins()
 	// test current score
 	console.log("Your score", currentScore)
     
+}
+
+// check wins
+const checkWins = () => {
+	// check if current score is greater than target
+	if(currentScore > targetScore){
+		lossCount++
+        console.log("You lost", lossCount)
+        $("#loss").html(lossCount)
+        // after we play, restart game
+        startGame()
+	} else if(currentScore === targetScore){
+		winsCount++
+        console.log("You win!!", winsCount)
+        $("#wins").html(winsCount)
+        // after we play, restart game
+        startGame()
+	}
 }
 
 // main game process
 startGame()
 // test clicks
 $("#blue").click(() => {
-	console.log("clicked blue!!")
+	// console.log("clicked blue!!")
 	// call func passing each obj
 	addValues(crystals.blue)
-
-
 })
-$("#green").click((crystal) => {
-	console.log("clicked green!!")
+$("#green").click(() => {
+	// console.log("clicked green!!")
 
-	// get a random value for the passed crystal
-
-
+	// call func passing each obj
+	addValues(crystals.blue)
 })
 $("#red").click(() => {
 	console.log("clicked red!!")
-
+	// call func passing each obj
+	addValues(crystals.blue)
 })
 $("#yellow").click(() => {
 	console.log("clicked yellow!!")
-
+	// call func passing each obj
+	addValues(crystals.blue)
 })
